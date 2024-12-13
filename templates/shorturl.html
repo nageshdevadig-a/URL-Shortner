@@ -1,0 +1,68 @@
+{% extends 'baseComp/main.html' %}
+{% load static %}
+{%block stylesheet %}
+<link rel="stylesheet" href="{% static '/stylesheet/index.css' %}">
+{% endblock stylesheet %}
+{% block content %}
+<div class="container align-center">
+    <div class="img">
+        <img style="margin: 50px 0 20px 0;" width="100" height="100" src="{% static '/images/broken-link.png' %}"
+            alt="link-image">
+        <h1 style="font-weight: 900;" class="fw-bloder">Make Your Long URLs Into Short URL!</h1>
+
+    </div>
+
+    <div style="padding: 50px 100px 50px 100px;" class="container card shadow">
+
+        <!-- Form Starts -->
+        <form id="url-form">
+            <!-- Long URL Input -->
+            <div class="mb-3">
+
+                <label style="margin-right: 85%;" for="long-url" class="form-label">Enter Long URL</label>
+                <input type="url" class="form-control border border-primary bg-info-subtle" id="long-url"
+                    placeholder="Enter your long URL here..." required>
+            </div>
+
+            <!-- Short URL Input -->
+            <div class="mb-3">
+                <label style="margin-right: 85%;" for="short-url" class="form-label">Custom Short URL</label>
+                <div class="input-group  border border-primary bg-info-subtle">
+                    <span style="margin: 0 1.5px 0 2px;padding-top: 5px;">https://example.com/</span>
+                    <input  minlength="8" maxlength="8" type="text" class="form-control border-start-0 bg-info-subtle"
+                        id="short-url" placeholder="Enter your desired short URL permalink..." required>
+                    <button class="btn btn-primary" type="button" id="generate-random">Generate Random</button>
+                </div>
+                <!-- Availability Message -->
+                <div id="availability-message" class="form-text mt-2"></div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn btn-primary w-100">Create Short URL</button>
+        </form>
+        <!-- Form Ends -->
+    </div>
+    <h3 style="font-weight: 400;" class="text-primary-emphasis  mt-5 mb-2">Recently Created Links!</h3>
+    <table class="table border-0 mb-2 shadow-lg">
+        <thead >
+          <tr>
+            <th class="text-primary">Sl.No</th>
+            <th class="text-primary">From</th>
+            <th class="text-primary">To</th>
+          </tr>
+        </thead>
+        <tbody id="urlTable" >
+
+            {% for url in urls %}
+            <tr>
+                <td class="text-primary-emphasis">{{ forloop.counter}}</td>
+                <td class="text-primary-emphasis">{{url.from}}</td>
+                <td class="text-primary-emphasis">{{url.to}}</td>
+               </tr>
+            {% endfor %}
+          <!-- URL rows will be dynamically populated here -->
+        </tbody>
+      </table>
+</div>
+
+    {% endblock content %}

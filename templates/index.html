@@ -1,0 +1,61 @@
+{% extends 'baseComp/main.html' %}
+{% load static %}
+{%block stylesheet %}
+<link rel="stylesheet" href="{% static '/stylesheet/index.css' %}">
+{% endblock stylesheet %}
+{% block content %}
+<main>
+    <aside class="left-side-content">
+        <div id="left-side-content-id">
+            <h1 style="font-family:Verdana;">Turn your long links into tiny links instantly!</h1>
+            <p>Create the perfect short urls for your long urls.</p>
+            <div id="form-reset" class="url-input shadow-lg">
+                <div style="height: 75px;" id="url-input-head">Shorten a long link</div>
+                <form id="url-form">
+                    <div>
+                        <div class="url-form-label">Enter long URL</div>
+                        <input
+                            class="shadow form-control bg-primary-subtle" type=" url" id="long-url"
+                            name="url" placeholder="https://example.com/long-url" required>
+                    </div>
+                    <div class="url-form-label" style="margin-top: 20px;">Custom short URL</div>
+                    <div id="short-url-div">
+                        <span id="pre-url" class="bg-primary-subtle"><h5>https://example.com/</h5></span>
+                        <input style="width: 200px;border-radius: 0 10px 10px 0;border-left: none;padding-left: 2px;" minlength="8" maxlength="15" type="text" name="text"
+                            class="form-control bg-primary-subtle" id="short-url" placeholder="Enter short url text."
+                            required>
+                        <button class="btn btn-cl" type="button"
+                            id="generate-random">Generate Random</button>
+                    </div>
+                    <div style="padding-right: 200px;visibility: hidden;" id="availability-message" class="form-text mt-2">availability-message</div>
+                    <div id="gen-url-cs" class="d-none">
+                        <div style="width: 300px; color: green;" class="url-form-label">Your short url is ready. Copy it!</div>
+                        <input
+                            class="shadow form-control bg-white" type=" url" id="gen-url"
+                            name="url" readonly>
+                            <button id="cp-url" type="button"><svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-copy" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"/>
+                              </svg></button>
+                              <p id="cpid" style="color: green;margin: 0;position: relative; bottom: 45px;left: 350px;font-size: 80%; width: 50px;visibility: hidden;">Copied!</p>
+                    </div>
+                    {% if is_logged_in %}
+                    <button id="url-form-btn" class="url-form-btn mb-3 mt-2" type="submit" disabled>Create Your link</button>
+                    {% else %}
+                    <button id="url-form-sign" type="button" class="mb-3 mt-2" data-bs-toggle="modal" data-bs-target="#signInModal">Sign In</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </aside>
+    <aside class="right-side-content">
+        <img src="{% static '/images/broken-link.png'%}" alt="link image">
+    </aside>
+
+
+</main>
+{% endblock content %}
+{% block javascript %}
+<script>
+    document.cookie = "csrftokenhm={{ csrf_token }}";
+</script>
+{% endblock javascript %}

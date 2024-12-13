@@ -1,0 +1,28 @@
+<!--Header section-->
+{% load static %}
+<header class="bg-white border rounded shadow-sm mb-4">
+    <div style="cursor: pointer;" onclick="window.location.href='/';" class="logo">URL Shorter://</div>
+    <nav>
+        <a href="/">Home</a>
+        <a href="https://github.com/nageshdevadig-a" target="_blank">Support</a>
+        <a href="https://github.com/nageshdevadig-a" target="_blank">Documentation</a>
+        <span>|</span>
+        <!-- <div id="nav-before"> -->
+        {% if is_logged_in %}
+        {% if request.user.profile_photo %}
+        <a id="pf-img"  href="/profile/"><img style="border-radius: 40px;border-color: 0.5px solid #074799;"  width="40" height="40" src="{{request.user.profile_photo}}" alt="profile"></a>
+        {% else %}
+        <a id="pf-img"  href="/profile/"><img style="border-radius: 40px;border-color: 0.5px solid #074799;"  width="40" height="40"  src="{% static '/icons/user.png' %}" alt="profile"></a>
+        {% endif %}
+        {% else %}
+        <div id="signBt" class="d-inline">
+        <button style="border: none;background: none; :active{border: none;background: none;}" type="button" class="header-buttnSI a" data-bs-toggle="modal" data-bs-target="#signInModal">
+            Sign in
+        </button>
+        <button style="border: none;:active{border: none;}" type="button" class="header-buttnSU btn-cl" data-bs-toggle="modal" data-bs-target="#signUpModal">
+            Sign Up
+        </button>
+        </div>
+        {% endif %}
+    </nav>
+</header>

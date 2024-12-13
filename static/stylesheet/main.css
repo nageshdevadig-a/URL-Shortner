@@ -1,0 +1,143 @@
+/* styles.css */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #ffffff;
+    color: #000;
+}
+.a ,a{
+    color: #074799;
+
+}
+.a:hover,a:hover{
+    color: #001A6E;
+}
+/* header css */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #001A6E;
+}
+
+nav a , .header-buttn{
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+    font-size: 15px;
+}
+
+nav span {
+    color: #ddd;
+    font-size: 15px;
+    height: 60px;
+    width: 21px;
+}
+
+
+nav .header-buttnSU {
+    padding: 5px 15px;
+    border-radius: 4px;
+}
+/*
+#nav-after{
+    display: none;
+} */
+
+/* sign-in form css */
+.modal-content {
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+#si-error-message{
+    color: red;
+    font-size: 0.9rem;
+    display: none;
+}
+#su-error-message {
+    color: red;
+    font-size: 0.9rem;
+    display: none;
+}
+
+/* footer css */
+footer {
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    padding: 20px;
+    text-align: left;
+    font-size: 14px;
+    color: #666;
+}
+
+.footer-content {
+    display: flex;
+    /* flex-direction: column; */
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.footer-content div {
+    margin: 0 0 10px 0;
+}
+
+.footer-content strong {
+    color: #333;
+}
+
+.social-icons {
+    display: flex;
+    gap: 10px;
+}
+
+.social-icons a {
+    display: inline-block;
+}
+
+.social-icons img {
+    width: 25px;
+    height: 25px;
+    /* filter: grayscale(1); */
+    transition: filter 0.3s ease;
+}
+
+.social-icons img:hover {
+    filter: grayscale(0);
+}
+
+  
+.btn-cl{
+    background-color: #074799;
+    color: #fff;
+}
+
+.btn-cl:hover{
+    background-color: #001A6E;
+    color: #fff;
+}
+
+
+/*====================== 404 page =======================*/
+.page_404 {
+    font-family: "Arvo", serif;
+}
+
+.four_zero_four_bg h1 {
+    font-size: 4rem;
+}
+
+.four_zero_four_bg h3 {
+    font-size: 4rem; 
+}
+
+.contant_box_404 {
+    margin-top: -3rem; 
+}

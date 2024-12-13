@@ -1,0 +1,37 @@
+{%extends 'baseComp/main.html' %}
+{% load static %}
+{% block content %}
+<div style="width: 500px;" class="container mt-5">
+    <h2>Change Password</h2>
+    <div id="disp-msg" class="alert alert-danger mt-3 d-none">
+        Disp msg
+</div>
+    <form id="passwd-cng" class="mt-4 mb-5">
+        <div class="form-group">
+            <label for="current_password">Current Password</label>
+            <input type="password" class="form-control" id="current_password" name="current_password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="new_password">New Password</label>
+            <input type="password" class="form-control" id="new_password" name="new_password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="confirm_password">Confirm New Password</label>
+            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+        </div>
+        
+        <div class="form-group mt-3">
+            <button id="change-passwd-btn" type="submit" class="btn btn-primary">Submit</button>
+        </div>
+        
+    </form>
+</div>
+{% endblock %}
+{% block javascript %}
+<script src="{% static '/javascript/change-passwd.js' %}"></script> 
+<script>
+  document.cookie = "csrftokenpwd={{ csrf_token }}";
+</script>
+{% endblock javascript %}

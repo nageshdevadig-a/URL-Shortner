@@ -19,6 +19,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 20px 40px;
+    width: 100%;
 }
 
 .logo {
@@ -141,3 +142,8 @@ footer {
 .contant_box_404 {
     margin-top: -3rem; 
 }
+
+
+/*====================== Responsive =======================*/
+
+

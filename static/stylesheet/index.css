@@ -10,7 +10,7 @@ main {
 main .left-side-content {
     display: flex;
     justify-content: center;
-    width: 800px;
+    width: 100%;
 }
 
 #left-side-content-id{
@@ -45,6 +45,7 @@ main .right-side-content {
     display: flex;
     /* justify-content: right; */
     margin:100px 50px;
+    width: 100%;
 }
 
 .right-side-content img {
@@ -107,7 +108,12 @@ main .right-side-content {
     border: 1.5px solid #0073FF;
     border-radius: 10px;
 }
-
+#short-url{
+    width: 200px;
+    border-radius: 0 10px 10px 0;
+    border-left: none;
+    padding-left: 2px;
+}
 
 .url-input form input:focus{
     border: 2px solid #0159c5;
@@ -193,3 +199,43 @@ main .right-side-content {
     box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
     transform: translateY(-3px);
 }
+
+/*====================== Responsive =======================*/
+
+@media only screen and (max-width : 1220px){
+main .right-side-content {
+    display: none;
+}
+}
+@media only screen and (max-width : 750px){
+    
+    #left-side-content-id{
+        width: 75%;
+        margin: 0;
+    }
+    .url-input {
+        margin-left: -40px;
+        margin-right: 0;
+        width: 125%;
+    }
+    .url-form-label{
+        width: 75%;
+        
+    }
+    .url-input form div input{
+        margin-right: 5px;
+        width: auto;
+
+    }
+    #short-url{
+        width: auto;
+        margin-right: 5px;
+        border-radius: 10px;
+        border-left: 1px solid #0073ff;
+        padding-left: 2px;
+    }
+    #pre-url{
+        display: none;
+    }
+    
+    }

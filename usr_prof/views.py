@@ -79,6 +79,14 @@ def deleteAccountPage(request):
         with connection.cursor() as cursor:
             cursor.execute('DELETE FROM home_customuser WHERE userId = %s;',[request.user.userId])
         logout(request)
+        # delete the img if it exist from same user
+        user_id = request.user.userId
+        profile_photos_path = os.path.join(settings.MEDIA_ROOT, 'profile_photos')
+        for filename in os.listdir(profile_photos_path):
+            if filename.startswith(f"{user_id}_"):
+                # If a file exists, delete it
+                os.remove(os.path.join(profile_photos_path, filename))
+                break
         return redirect("/")
     return redirect("/")
 

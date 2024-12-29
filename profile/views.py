@@ -6,6 +6,7 @@ from django.http import JsonResponse
 from django.db import connection
 from django.conf import settings
 from django.core.files.storage import FileSystemStorage
+from django.contrib.sessions.models import Session
 # from django.contrib.auth import get_user_model
 # from django.db.models import Q
 # User = get_user_model()
@@ -27,7 +28,7 @@ def displayProfilePage(request):
         try:
             # urls = UrlManager.objects.filter(userID=request.user.userId).order_by('-created')
             with connection.cursor() as cursor:
-                cursor.execute("SELECT * FROM home_urlmanager url JOIN home_userurlrelation rel ON url.urlID = rel.urlID_id WHERE userID_id = %s ORDER BY rel.created DESC;",[request.user.userId])
+                cursor.execute("SELECT * FROM url url JOIN user_url rel ON url.urlID = rel.url_id WHERE user_id = %s ORDER BY rel.created_at DESC;",[request.user.userId])
                 urls = dictfetchall(cursor)
                 if len(urls) >=5:
                     urls = urls[:5]
@@ -51,6 +52,8 @@ def displayProfilePage(request):
 
 def logoutUser(request):
     logout(request)
+    if request.session.session_key:
+        Session.objects.filter(session_key=session_key).delete()
     return redirect("/")
 
 
@@ -87,6 +90,8 @@ def deleteAccountPage(request):
                 os.remove(os.path.join(profile_photos_path, filename))
                 break
         logout(request)
+        if request.session.session_key:
+            Session.objects.filter(session_key=session_key).delete()
         return redirect("/")
     return redirect("/")
 
@@ -106,13 +111,13 @@ def updateUrlPage(request):
             update_url.longUrl = longUrl
             update_url.save() '''
             with connection.cursor() as cursor:
-                cursor.execute("SELECT * FROM home_urlmanager WHERE urlID = %s;",[urlID])
+                cursor.execute("SELECT * FROM url WHERE urlID = %s;",[urlID])
                 update_url = dictfetchone(cursor)
                 if update_url["shortUrl"] != shortUrl:
-                    cursor.execute("UPDATE home_urlmanager SET longUrl = %s, shortUrl = %s, visits = %s WHERE urlID = %s;",[longUrl, shortUrl,0, urlID])
+                    cursor.execute("UPDATE url SET longUrl = %s, shortUrl = %s, visits = %s WHERE urlID = %s;",[longUrl, shortUrl,0, urlID])
                     return JsonResponse({"success": True, "message": "URL updated"})
                 else:
-                    cursor.execute("UPDATE home_urlmanager SET longUrl = %s WHERE urlID = %s;",[longUrl, urlID])
+                    cursor.execute("UPDATE url SET longUrl = %s WHERE urlID = %s;",[longUrl, urlID])
                     return JsonResponse({"success": True, "message": "URL updated"})
 
         else:
@@ -130,7 +135,7 @@ def deleteUrlPage(request):
             urlID = data.get("urlID")
             # UrlManager.objects.get(urlID = urlID).delete()
             with connection.cursor() as cursor:
-                cursor.execute("DELETE FROM home_urlmanager WHERE urlID = %s;",[urlID])
+                cursor.execute("DELETE FROM url WHERE urlID = %s;",[urlID])
                 return JsonResponse({"success": True, "message": "URL updated"})
         else:
             return JsonResponse({"success": False, "message": "User not authenticated"}, status=401)
@@ -146,20 +151,20 @@ def searchQuery(request):
         with connection.cursor() as cursor:
             if query == "show-all":
                 # urls = UrlManager.objects.filter(userID=request.user.userId)
-                cursor.execute("SELECT * FROM home_urlmanager url JOIN home_userurlrelation rel ON url.urlID = rel.urlID_id WHERE userID_id = %s;",[request.user.userId])
+                cursor.execute("SELECT * FROM url JOIN user_url rel ON url.urlID = rel.url_id WHERE user_id = %s;",[request.user.userId])
                 urls = dictfetchall(cursor)
             elif query == "recent-url":
                 # urls = UrlManager.objects.filter(userID=request.user.userId).order_by('-created')
-                cursor.execute("SELECT * FROM home_urlmanager url JOIN home_userurlrelation rel ON url.urlID = rel.urlID_id WHERE userID_id = %s ORDER BY rel.created DESC;",[request.user.userId])
+                cursor.execute("SELECT * FROM url JOIN user_url rel ON url.urlID = rel.url_id WHERE user_id = %s ORDER BY rel.created_at DESC;",[request.user.userId])
                 urls = dictfetchall(cursor)
             elif query == "top-ten-url":
                 # urls = UrlManager.objects.filter(userID=request.user.userId).order_by('-visits')
-                cursor.execute("SELECT * FROM home_urlmanager url JOIN home_userurlrelation rel ON url.urlID = rel.urlID_id WHERE userID_id = %s ORDER BY url.visits DESC;",[request.user.userId])
+                cursor.execute("SELECT * FROM url JOIN user_url rel ON url.urlID = rel.url_id WHERE user_id = %s ORDER BY url.visits DESC;",[request.user.userId])
                 urls = dictfetchall(cursor)
             else:
                 # urls = UrlManager.objects.filter(Q(longUrl__icontains=query) | Q(shortUrl__icontains=query), userID=request.user.userId)
                 queryString = f"%{query}%" # wrap the query inside %% for partial matching
-                cursor.execute("SELECT * FROM home_urlmanager url JOIN home_userurlrelation rel ON url.urlID = rel.urlID_id WHERE (longUrl LIKE %s OR shortUrl LIKE %s) AND userID_id = %s ;",[queryString,queryString,request.user.userId])
+                cursor.execute("SELECT * FROM url JOIN user_url rel ON url.urlID = rel.url_id WHERE (longUrl LIKE %s OR shortUrl LIKE %s) AND user_id = %s ;",[queryString,queryString,request.user.userId])
                 urls = dictfetchall(cursor)
         userName = request.user.name
         userEmail = request.user.email

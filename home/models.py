@@ -16,20 +16,20 @@ class CustomUser(AbstractBaseUser,PermissionsMixin):
         return self.email
 
 
-class UrlManager(models.Model):
-    urlID = models.BigAutoField(primary_key=True)
-    longUrl = models.CharField(max_length=1000)
-    shortUrl = models.CharField(unique=True, max_length=20)
-    relationID = models.ForeignKey('UserUrlRelation', on_delete=models.CASCADE)
-    visits = models.IntegerField(default=0)
-
-    def __str__(self):
-        return self.shortUrl
-
-class UserUrlRelation(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    userID = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    urlID = models.ForeignKey(UrlManager, on_delete=models.CASCADE)
-    created = models.DateTimeField(auto_now_add=True)
-    def __str__(self):
-        return self.urlID
+# class UrlManager(models.Model):
+#     urlID = models.BigAutoField(primary_key=True)
+#     longUrl = models.CharField(max_length=1000)
+#     shortUrl = models.CharField(unique=True, max_length=20)
+#     relationID = models.ForeignKey('UserUrlRelation', on_delete=models.CASCADE)
+#     visits = models.IntegerField(default=0)
+#
+#     def __str__(self):
+#         return self.shortUrl
+#
+# class UserUrlRelation(models.Model):
+#     id = models.BigAutoField(primary_key=True)
+#     userID = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+#     urlID = models.ForeignKey(UrlManager, on_delete=models.CASCADE)
+#     created = models.DateTimeField(auto_now_add=True)
+#     def __str__(self):
+#         return self.urlID
